@@ -14,7 +14,7 @@ RUN apt install --no-install-recommends -y \
 	build-essential \
 	libsqlite3-dev
 
-COPY ./docker /graphql
+COPY ./ /graphql
 
 WORKDIR /graphql
 

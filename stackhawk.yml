@@ -2,7 +2,7 @@ hawk:
   spider:
     ajax: true
 app:
-  applicationId: 3DCE74D7-EA32-44AC-A81E-1557DFF55DAD
+  applicationId: kkAAAKAW-kAWW-kkAA-WWwW-kAAkkAAAAwWW
   env: dev
   host: http://127.0.0.1:3000
   appDataType: PANTS
