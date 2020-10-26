@@ -16,7 +16,7 @@ source ./AUTH_TOKEN;
 
 docker run -e AUTH_TOKEN="${token}" -e AUTH_COOKIE="${cookie}" -e SHAWK_DEBUG=true -e SHAWK_AUTH_ENDPOINT= -e APP_HOST=http://127.0.0.1:3000 --rm -v $(pwd):/hawk:rw -ti --name hawkscan --network hawknet stackhawk/hawkscan:latest
 
-[[ $? != 1 ]] && exit 2
+[[ $? != 0 ]] && exit 2
 
 if [[ -f ${compose} ]]; then
 	docker-compose down
