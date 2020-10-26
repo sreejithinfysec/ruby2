@@ -1,0 +1,27 @@
+version: '3'
+services:
+  base:
+    image: stackhawk/graphql-ruby
+    container_name: graphql-ruby
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - port=3000
+        - env=test
+    environment:
+      - SERVER_PORT=${SERVER_PORT:-3000}
+      - ENV=${ENV:-test}
+    ports:
+      - ${SERVER_PORT:-3000}:${SERVER_PORT:-3000}
+    entrypoint:
+      - docker-entrypoint.sh
+    networks:
+      hawknet:
+        aliases:
+          - graphql-ruby
+networks:
+  hawknet:
+    name: hawknet
+    ipam:
+      driver: default
