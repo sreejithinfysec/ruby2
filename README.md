@@ -55,6 +55,5 @@ Once the `vuln-graphql-ruby` container is up:
         -v $(pwd):/hawk:rw \
         -ti \
         --name hawkscan \
-        --network hawknet \
         stackhawk/hawkscan:latest
 ```
