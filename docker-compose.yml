@@ -1,8 +1,8 @@
 version: '3'
 services:
   base:
-    image: stackhawk/graphql-ruby
-    container_name: graphql-ruby
+    image: stackhawk/vuln-graphql-ruby
+    container_name: vuln-graphql-ruby
     build:
       dockerfile: ./Dockerfile
       context: .
