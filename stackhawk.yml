@@ -10,7 +10,7 @@ app:
     - /images/.*
   graphqlConf:
     enabled: true
-    operationType: ALL
+    operation: ALL
     schemaPath: /graphql
 hawkAddOn:
   replacer:
