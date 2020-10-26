@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+response=$(curl --location --request GET 'http://localhost:3000/' -D -)
+export token=$(echo "${response}" | grep 'X\-CSRF\-Token' | awk '{print "{ "$0" }"}' | jq '."X-CSRF-Token"' | awk -F\" '{print $2}')
+export cookie=$(echo "${response}" | egrep -ow "\s_graphql_ruby_session=([^ ;]*)")
