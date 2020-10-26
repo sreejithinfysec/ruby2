@@ -1,4 +1,7 @@
 class GraphqlController < ApplicationController
+
+  protect_from_forgery with: :null_session
+
   def execute
     result = GraphqlTutorialSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result

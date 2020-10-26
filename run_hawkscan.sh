@@ -5,7 +5,7 @@ env=${2:-test}
 
 docker network create hawknet
 docker build -t stackhawk/vuln-graphql-ruby .
-docker run --rm --name vuln-graphql-ruby --network hawknet -p ${port}:${port} -e PORT=${port} -e ENV=${env} stackhawk/vuln-graphql-ruby
+docker run --rm --name vuln-graphql-ruby --network hawknet -d -p ${port}:${port} -e PORT=${port} -e ENV=${env} stackhawk/vuln-graphql-ruby
 
 sleep 5
 
