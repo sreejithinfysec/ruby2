@@ -1,0 +1,19 @@
+app:
+  applicationId: kkAAAKAW-kAWW-kkAA-WWwW-kAAkkAAAAwWW
+  env: dev
+  host: http://127.0.0.1:9000
+  appDataType: PANTS
+  riskLevel: HIGH
+  graphqlConf:
+    enabled: true
+    operationType: MUTATION
+      schemaPath: /graphql
+    hawkAddOn:
+      replacer:
+        rules:
+          - matchString: "X-CSRF-Token"
+            replacement: ${AUTH_TOKEN}
+            replaceOnly: false
+          - matchString: "Cookie"
+            replacement: ${AUTH_COOKIE}
+            replaceOnly: false
