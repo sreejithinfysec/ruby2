@@ -1,7 +1,7 @@
 app:
   applicationId: kkAAAKAW-kAWW-kkAA-WWwW-kAAkkAAAAwWW
   env: dev
-  host: http://127.0.0.1:3000
+  host: http://127.0.0.1:9000
   appDataType: PANTS
   riskLevel: HIGH
   antiCsrfParam: X-CSRF-Token

@@ -1,7 +1,7 @@
 FROM ruby:2.6.5-slim
 
-ARG port=3000
-ARG env=test
+ARG port
+ARG env
 
 RUN apt update && apt upgrade -y
 RUN apt install --no-install-recommends -y \
@@ -14,7 +14,7 @@ RUN apt install --no-install-recommends -y \
 	build-essential \
 	libsqlite3-dev
 
-COPY ./ /graphql
+COPY ./app /graphql
 
 WORKDIR /graphql
 
