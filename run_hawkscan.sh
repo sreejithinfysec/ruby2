@@ -1,19 +1,42 @@
 #!/usr/bin/env bash
 
-port=${1:-3000}
-env=${2:-test}
+docker-compose --help >/dev/null
+COMPOSE=$?
+if [[ ${COMPOSE} == 0 ]]; then
+	APP_CMD="docker-compose up --build -d" 
+else
+	APP_CMD="docker network create hawknet && \
+		docker build -t stackhawk/vuln-graphql-ruby . && \
+		docker run --network hawknet --rm --name gql-ruby -td -p 3000:3000 stackhawk/vuln-graphql-ruby"
+fi
 
-docker network create hawknet
-docker build -t stackhawk/vuln-graphql-ruby .
-docker run --rm --name vuln-graphql-ruby --network hawknet -d -p ${port}:${port} -e PORT=${port} -e ENV=${env} stackhawk/vuln-graphql-ruby
+# Run vuln-graphql-ruby
+${APP_CMD}
 
 sleep 5
 
-source ./AUTH_TOKEN;
+chmod o+rw $(pwd)
+HAWKSCAN_CMD="docker run \
+  -e SHAWK_DEBUG=true \
+  -e SHAWK_AUTH_ENDPOINT= \
+  -e APP_HOST=http://${APP_HOST}:9000 \
+  --rm \
+  -v $(pwd):/hawk:rw \
+  -t \
+  --name hawkscan \
+  --network hawknet \
 
-docker run -e AUTH_TOKEN="${token}" -e AUTH_COOKIE="${cookie}" -e SHAWK_DEBUG=true -e SHAWK_AUTH_ENDPOINT= -e APP_HOST=http://127.0.0.1:${port} --rm -v $(pwd):/hawk:rw -ti --name hawkscan --network hawknet stackhawk/hawkscan:latest
+  stackhawk/hawkscan:latest"
+
+echo ${HAWKSCAN_CMD}
+
+${HAWKSCAN_CMD}
 
 x=$?
-[[ ${x} != 0 ]] && exit ${x}
+if [[ ${x} != 0 ]]; then
+  [[ -e ${COMPOSE} ]] && docker-compose kill && docker-compose rm || docker kill gql-ruby 
+  exit ${x}
+fi
 
-docker kill vuln-graphql-ruby && docker rm vuln-graphq-ruby && docker network rm hawknet
+[[ -e ${COMPOSE} ]] && docker-compose kill && docker-compose rm || docker kill gql-ruby 
+

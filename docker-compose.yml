@@ -1,26 +1,21 @@
-version: '3.7'
+version: "3.8"
 services:
   base:
     image: stackhawk/vuln-graphql-ruby
-    container_name: vuln-graphql-ruby
+    container_name: gql-ruby
     build:
       dockerfile: ./Dockerfile
       context: .
-      args:
-        - port=3000
-        - env=test
-    environment:
-      - SERVER_PORT=${SERVER_PORT:-3000}
-      - ENV=${ENV:-test}
     ports:
-      - ${SERVER_PORT:-3000}:${SERVER_PORT:-3000}
+      - 9000:3000
     entrypoint:
       - docker-entrypoint.sh
     networks:
       hawknet:
         aliases:
-          - graphql-ruby
+          - gql-ruby
 networks:
   hawknet:
+    name: hawknet
     ipam:
       driver: default
