@@ -1,14 +1,15 @@
 #!/bin/bash
 
-[[ -z ${SERVER_PORT} ]] && p=3000 || p=${SERVER_PORT}
+port=${PORT:-3000}
+env=${ENV:-test}
 
-[[ -z ${1} ]] && port=${p} || port=${1}
+DEV_SECRET=$(date | sha256sum)
+sleep 1
+TEST_SECRET=$(date | sha256sum)
 
-[[ -z ${ENV} ]] && e=test || e=${ENV}
-
-[[ -z ${2} ]] && env=${e} || env=${2}
-
-sed -i'' -E "s/%SERVER_PORT%/${port}/g" /graphql/config/puma.rb
+sed -i'' -E "s/%PORT%/${port}/g" /graphql/config/puma.rb
 sed -i'' -E "s/%ENV%/${env}/g" /graphql/config/puma.rb
+sed -i'' -E "s/%DEV_SECRET_KEY%/${DEV_SECRET}/g" /graphql/config/secrets.yml
+sed -i'' -E "s/%TEST_SECRET_KEY%/${TEST_SECRET}/g" /graphql/config/secrets.yml
 
 rails server $@

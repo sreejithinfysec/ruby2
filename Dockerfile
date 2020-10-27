@@ -1,9 +1,7 @@
 FROM ruby:2.6.5-slim
 
-ARG port
-ARG env
-
 RUN apt update && apt upgrade -y
+
 RUN apt install --no-install-recommends -y \
 	git \
 	sqlite3 \
@@ -18,11 +16,7 @@ COPY ./app /graphql
 
 WORKDIR /graphql
 
-ENV SERVER_PORT $port
-
-ENV ENV $env
-
-EXPOSE $SERVER_PORT
+EXPOSE 9000 3000
 
 RUN bundle install
 
