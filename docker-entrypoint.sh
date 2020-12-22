@@ -12,4 +12,5 @@ sed -i'' -E "s/%ENV%/${env}/g" /graphql/config/puma.rb
 sed -i'' -E "s/%DEV_SECRET_KEY%/${DEV_SECRET}/g" /graphql/config/secrets.yml
 sed -i'' -E "s/%TEST_SECRET_KEY%/${TEST_SECRET}/g" /graphql/config/secrets.yml
 
+export RAILS_ENV=development
 rails server $@
